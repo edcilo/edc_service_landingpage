@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+    edc_psql:
+        container_name: edc_psql
+        image: postgres
+        restart: always
+        ports:
+            - ${APP_DB_PORT:-5432}:5432
+        environment:
+            POSTGRES_DB: ${APP_DB_NAME:-mobilender}
+            POSTGRES_USER: ${APP_DB_USER:-mobilender}
+            POSTGRES_PASSWORD: ${APP_DB_ROOT_PSW:-secret}
+        networks:
+            - edciloNet
+
+    edc_django:
+        container_name: edc_django
+        build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./:/code
+        ports:
+            - ${APP_DJANGO_PORT:-8000}:8000
+        depends_on:
+            - edc_psql
+        networks:
+            - edciloNet
+
+networks:
+    edciloNet:
+        driver: "bridge"
