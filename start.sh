@@ -9,7 +9,7 @@ env=${APP_ENV:-dev}
 if [ $env = "prod" ]
 then
     echo $(date '+%F %T.%3N %Z') "[django] INFO: running production environment"
-    gunicorn edcilo_com.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    gunicorn edcilo_com.wsgi:application --bind 0.0.0.0:8000 --config ./gunicorn.config.py
 else
     echo $(date '+%F %T.%3N %Z') "[django] INFO: running develop environment"
     python manage.py runserver 0.0.0.0:8000
