@@ -19,13 +19,24 @@ services:
     edc_django:
         container_name: edc_django
         build: .
-        command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - ./:/code
-        ports:
-            - ${APP_DJANGO_PORT:-8000}:8000
         depends_on:
             - edc_psql
+        environment:
+            APP_ENV: ${APP_ENV:-dev}
+        networks:
+            - edciloNet
+
+    edc_nginx:
+        container_name: edc_nginx
+        image: nginx:alpine
+        volumes:
+            - ./docker/nginx/sites:/etc/nginx/conf.d
+        ports:
+            - ${APP_PORT:-80}:80
+        depends_on:
+            - edc_django
         networks:
             - edciloNet
 
