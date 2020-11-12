@@ -10,4 +10,5 @@ COPY . /code/
 RUN pip install -r requirements.txt
 RUN chmod a+rx ./start.sh
 
+EXPOSE 8000
 CMD ["./start.sh"]
