@@ -37,4 +37,4 @@ Execute the next command:
 docker-compose up
 ```
 
-Open your browser with the next url: http://127.0.0.1:8000
+Open your browser with the next url: http://127.0.0.1
