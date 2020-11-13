@@ -1,5 +1,6 @@
 FROM python:3
 
+# causes all output to stdout to be flushed immediately,
 ENV PYTHONUNBUFFERED=1
 
 RUN mkdir /code
