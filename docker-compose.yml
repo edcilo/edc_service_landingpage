@@ -10,8 +10,8 @@ services:
         volumes:
             - psqlVolume:/var/lib/postgresql/data
         environment:
-            POSTGRES_DB: ${APP_DB_NAME:-mobilender}
-            POSTGRES_USER: ${APP_DB_USER:-mobilender}
+            POSTGRES_DB: ${APP_DB_NAME:-edcilo.com}
+            POSTGRES_USER: ${APP_DB_USER:-admin}
             POSTGRES_PASSWORD: ${APP_DB_ROOT_PSW:-secret}
         networks:
             - edciloNet
