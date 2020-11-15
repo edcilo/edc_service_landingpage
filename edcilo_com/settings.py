@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from .environ import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h_c=))%37m@tt5mmdw&#*4^c*&=64^l_b3)(6*^*89kdi2i=2z'
+SECRET_KEY = env('APP_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('APP_DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -76,11 +77,11 @@ WSGI_APPLICATION = 'edcilo_com.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'edcilo.com',
-        'USER': 'root',
-        'PASSWORD': 'secret',
-        'HOST': 'edc_psql',
-        'PORT': 5432,
+        'NAME': env('APP_DB_NAME'),
+        'USER': env('APP_DB_USER'),
+        'PASSWORD': env('APP_DB_PASS'),
+        'HOST': env('APP_DB_HOST'),
+        'PORT': env('APP_DB_PORT'),
     }
 }
 
@@ -107,9 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = env('APP_LANG')
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = env('APP_TIME_ZONE')
 
 USE_I18N = True
 
