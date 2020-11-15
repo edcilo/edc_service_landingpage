@@ -22,8 +22,11 @@ class Landing(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        # if is published, then set false in published field of other schemas
-        # if not published and there aren't other schemas published set True in this schema
+        if self.published is True:
+            Landing.objects.filter(published=True).exclude(id=self.id).update(published=False)
+        elif Landing.objects.filter(published=True).exclude(id=self.id).count() == 0:
+                self.published = True
+
         super().save(*args, **kwargs)
 
     class Meta:
