@@ -8,5 +8,5 @@ app_name = 'landingpage'
 
 # urls
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('api/v1/', views.index, name='index'),
 ]
