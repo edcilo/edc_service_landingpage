@@ -1,4 +1,5 @@
-from django.http import JsonResponse
+from django.http import Http404
+from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from .models import Landing
@@ -8,6 +9,9 @@ from .serializers import LandingSerializer
 # Create your views here.
 @api_view(['GET'])
 def index(request):
-    schema = Landing.objects.filter(published=True).get()
-    serializer = LandingSerializer(schema)
-    return JsonResponse(serializer.data, safe=True)
+    try:
+        schema = Landing.objects.filter(published=True).get()
+        serializer = LandingSerializer(schema)
+        return Response(serializer.data)
+    except Landing.DoesNotExist:
+        raise Http404

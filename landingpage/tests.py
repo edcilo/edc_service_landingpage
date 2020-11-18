@@ -1,15 +1,35 @@
 from django.test import TestCase
-
 from django.urls import reverse
+
 from .models import Landing
+from .serializers import LandingSerializer
+
 
 # Create your tests here.
 class HomeViewTests(TestCase):
 
-    def test_load_home(self):
-        response = self.client.get(reverse('landingpage:index'))
+    def test_get_schema_endpoint(self):
+        Landing.objects.create(name='test', schema={"title": "test"}, published=True)
+        response = self.client.get(reverse('landingpage:index'), format='json')
+
+        schema_published = Landing.objects.filter(published=True).get()
+        serializer = LandingSerializer(schema_published)
+
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "edcilo.com")
+        self.assertEqual(response.data, serializer.data)
+
+    def test_not_found_schema(self):
+        response = self.client.get(reverse('landingpage:index'), format='json')
+        self.assertEqual(response.status_code, 404)
+
+    def test_methods_not_allowed(self):
+        response_post = self.client.post(reverse('landingpage:index'), format='json')
+        response_put = self.client.post(reverse('landingpage:index'), format='json')
+        response_delete = self.client.post(reverse('landingpage:index'), format='json')
+
+        self.assertEqual(response_post.status_code, 405)
+        self.assertEqual(response_put.status_code, 405)
+        self.assertEqual(response_delete.status_code, 405)
 
 
 class LandingModelTests(TestCase):
