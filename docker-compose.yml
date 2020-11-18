@@ -1,48 +1,48 @@
 version: "3.3"
 
 services:
-    edc_psql:
-        container_name: edc_psql
+    landing_psql:
+        container_name: landing_psql
         image: postgres
         restart: always
         ports:
             - ${APP_DB_PORT:-5432}:5432
         volumes:
-            - psqlVolume:/var/lib/postgresql/data
+            - landingPsqlVolume:/var/lib/postgresql/data
         environment:
-            POSTGRES_DB: ${APP_DB_NAME:-edcilo.com}
+            POSTGRES_DB: ${APP_DB_NAME:-landing}
             POSTGRES_USER: ${APP_DB_USER:-admin}
             POSTGRES_PASSWORD: ${APP_DB_PASS:-secret}
         networks:
-            - edciloNet
+            - landingNet
 
-    edc_django:
-        container_name: edc_django
+    landing_django:
+        container_name: landing_django
         build: .
         volumes:
             - ./:/code
         depends_on:
-            - edc_psql
+            - landing_psql
         environment:
             APP_ENV: ${APP_ENV:-dev}
         networks:
-            - edciloNet
+            - landingNet
 
-    edc_nginx:
-        container_name: edc_nginx
+    landing_nginx:
+        container_name: landing_nginx
         image: nginx:alpine
         volumes:
             - ./docker/nginx/sites:/etc/nginx/conf.d
         ports:
             - ${APP_PORT:-80}:80
         depends_on:
-            - edc_django
+            - landing_django
         networks:
-            - edciloNet
+            - landingNet
 
 networks:
-    edciloNet:
+    landingNet:
         driver: "bridge"
 
 volumes:
-    psqlVolume:
+    landingPsqlVolume:
