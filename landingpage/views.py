@@ -12,6 +12,6 @@ def index(request):
     try:
         schema = Landing.objects.filter(published=True).get()
         serializer = LandingSerializer(schema)
-        return Response(serializer.data)
+        return Response({"data": serializer.data})
     except Landing.DoesNotExist:
         raise Http404

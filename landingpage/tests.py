@@ -16,7 +16,7 @@ class HomeViewTests(TestCase):
         serializer = LandingSerializer(schema_published)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.data, {"data": serializer.data})
 
     def test_not_found_schema(self):
         response = self.client.get(reverse('landingpage:index'), format='json')
