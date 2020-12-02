@@ -29,7 +29,7 @@ DATABASES = {
 
 Change your_db_name, your_db_name, your_password for your db credentials defined in .env file
 
-## Run dajngo
+## Run django
 
 Execute the next command:
 
