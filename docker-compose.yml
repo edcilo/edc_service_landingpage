@@ -40,6 +40,13 @@ services:
         networks:
             - landingNet
 
+    landing_redis:
+        container_name: landing_redis
+        image: redis:6
+        restart: always
+        networks:
+            - landingNet
+
 networks:
     landingNet:
         driver: "bridge"
