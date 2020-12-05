@@ -29,6 +29,7 @@ SECRET_KEY = env('APP_SECRET_KEY')
 DEBUG = env('APP_DEBUG')
 
 ALLOWED_HOSTS = [
+    "landing.edcilo.com",
     "landing.edcilodev.com",
     "localhost",
 ]
