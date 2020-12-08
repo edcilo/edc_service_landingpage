@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 def schema_default():
     return {
@@ -25,7 +26,7 @@ class Landing(models.Model):
         if self.published is True:
             Landing.objects.filter(published=True).exclude(id=self.id).update(published=False)
         elif Landing.objects.filter(published=True).exclude(id=self.id).count() == 0:
-                self.published = True
+            self.published = True
 
         super().save(*args, **kwargs)
 
