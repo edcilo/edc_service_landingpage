@@ -28,11 +28,7 @@ SECRET_KEY = env('APP_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('APP_DEBUG')
 
-ALLOWED_HOSTS = [
-    "landing.edcilo.com",
-    "landing.edcilodev.com",
-    "localhost",
-]
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 
 # Application definition
