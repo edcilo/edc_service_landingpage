@@ -21,6 +21,7 @@ services:
         build: .
         volumes:
             - ./:/code
+            - ./docker/landing/static:/code/static
         depends_on:
             - landing_psql
         environment:
@@ -33,6 +34,7 @@ services:
         image: nginx:alpine
         volumes:
             - ./docker/nginx/sites:/etc/nginx/conf.d
+            - ./docker/landing/static:/code/static
         ports:
             - ${APP_PORT:-80}:80
         depends_on:
