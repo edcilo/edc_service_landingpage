@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.cache import cache
 
 
 # Create your models here.
@@ -23,12 +24,18 @@ class Landing(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
+        cache.delete_pattern("*landing_view*")
+
         if self.published is True:
             Landing.objects.filter(published=True).exclude(id=self.id).update(published=False)
         elif Landing.objects.filter(published=True).exclude(id=self.id).count() == 0:
             self.published = True
 
         super().save(*args, **kwargs)
+
+    def delete(self, using=None, keep_parents=False):
+        cache.delete_pattern("*landing_view*")
+        super(Landing, self).delete(using, keep_parents)
 
     class Meta:
         get_latest_by = "created"
