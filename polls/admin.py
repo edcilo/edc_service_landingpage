@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Choice, Question
 
+
 # Register your models here.
 class ChoiceInline(admin.TabularInline):
     model = Choice
@@ -9,7 +10,7 @@ class ChoiceInline(admin.TabularInline):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    #fields = ['pub_date', 'question_text']
+    # fields = ['pub_date', 'question_text']
     list_display = ('question_text', 'pub_date', 'was_published_recently')
     list_filter = ['pub_date']
     search_fields = ['question_text']
@@ -20,6 +21,5 @@ class QuestionAdmin(admin.ModelAdmin):
     ]
     inlines = [ChoiceInline]
 
-
-admin.site.register(Question, QuestionAdmin)
-#admin.site.register(Choice)
+# admin.site.register(Question, QuestionAdmin)
+# admin.site.register(Choice)

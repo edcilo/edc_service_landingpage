@@ -4,6 +4,7 @@ from django_json_widget.widgets import JSONEditorWidget
 
 from .models import Landing
 
+
 # Register your models here.
 class LandingAdmin(admin.ModelAdmin):
     list_display = ('name', 'published', 'last_modified', 'created')
@@ -11,5 +12,6 @@ class LandingAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.JSONField: {'widget': JSONEditorWidget},
     }
+
 
 admin.site.register(Landing, LandingAdmin)

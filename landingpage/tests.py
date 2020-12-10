@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.core.cache import cache
 
 from .models import Landing
 from .serializers import LandingSerializer
@@ -19,6 +20,7 @@ class HomeViewTests(TestCase):
         self.assertEqual(response.data, {"data": serializer.data})
 
     def test_not_found_schema(self):
+        cache.delete_pattern("*landing_view*")
         response = self.client.get(reverse('landingpage:index'), format='json')
         self.assertEqual(response.status_code, 404)
 
