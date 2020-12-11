@@ -8,6 +8,7 @@ env = environ.Env(
     APP_SECRET_KEY=(str, None),
     APP_PORT=(int, 80),
     ALLOWED_HOSTS=(list, 'localhost'),
+    APP_HOME_REDIRECT_TO=(str, 'http://localhost'),
 
     APP_DB_HOST=(str, 'localhost'),
     APP_DB_PORT=(int, 5432),
