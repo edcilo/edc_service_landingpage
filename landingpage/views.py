@@ -23,7 +23,15 @@ def index(request):
 @api_view(['GET'])
 def published_schema(request):
     try:
+        lang = request.GET['lang'] if 'lang' in request.GET else None
         schema = Landing.objects.filter(published=True).get()
+
+        if lang is not None and lang not in schema.schema:
+            raise Http404
+
+        if lang is not None:
+            schema.schema = schema.schema[lang]
+
         serializer = LandingSerializer(schema)
         return Response({"data": serializer.data})
     except Landing.DoesNotExist:
