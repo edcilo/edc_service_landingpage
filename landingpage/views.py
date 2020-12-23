@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from .models import Landing
-from .serializers import LandingSerializer
+from .serializers import LandingSerializer, ContactSerializer
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 REDIRECT_TO = getattr(settings, 'HOME_REDIRECT_TO')
@@ -36,3 +36,12 @@ def published_schema(request):
         return Response({"data": serializer.data})
     except Landing.DoesNotExist:
         raise Http404
+
+
+@api_view(['POST'])
+def send_contact_mail(request):
+    serializer = ContactSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+
+    return Response({"data": serializer.data}, 201)
