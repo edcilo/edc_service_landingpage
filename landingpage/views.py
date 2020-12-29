@@ -1,7 +1,10 @@
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from edcilo_com.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 from django.http import Http404
 from django.shortcuts import redirect
+from django.template.loader import render_to_string
 from django.views.decorators.cache import cache_page
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -42,6 +45,16 @@ def published_schema(request):
 def send_contact_mail(request):
     serializer = ContactSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    serializer.save()
+    msg = serializer.save()
+
+    msg_html = render_to_string('emails/contact.html', {'msg': msg})
+    send_mail(
+        'Contact mail',
+        msg.message,
+        'contact@edcilo.com',
+        [EMAIL_HOST_USER],
+        fail_silently=False,
+        html_message=msg_html
+    )
 
     return Response({"data": serializer.data}, 201)

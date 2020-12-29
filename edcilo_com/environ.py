@@ -16,6 +16,11 @@ env = environ.Env(
     APP_DB_USER=(str, None),
     APP_DB_PASS=(str, None),
 
+    APP_EMAIL_HOST=(str, None),
+    APP_EMAIL_PORT=(int, 587),
+    APP_EMAIL_USER=(str, None),
+    APP_EMAIL_PASS=(str, None),
+
     APP_LANG=(str, 'en'),
     APP_TIME_ZONE=(str, 'UTC'),
 
