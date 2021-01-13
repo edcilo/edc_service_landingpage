@@ -1,10 +1,22 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 set -e
 
 echo $(date '+%F %T.%3N %Z') "[django] INFO: running start.sh"
 
 env=${APP_ENV:-dev}
+
+
+echo "update pip and install dependencies"
+/usr/local/bin/python -m pip install --upgrade pip
+pip install -r requirements.txt
+
+echo "execute migrations"
+python manage.py migrate
+
+echo "collect static files"
+python manage.py collectstatic  --noinput
+
 
 if [ $env = "prod" ]
 then
