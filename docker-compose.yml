@@ -20,12 +20,11 @@ services:
         container_name: landing_django
         build: .
         volumes:
-            - ./:/code
             - ./docker/landing/static:/code/static
         depends_on:
             - landing_psql
-        environment:
-            APP_ENV: ${APP_ENV:-dev}
+        env_file:
+            - .env
         networks:
             - landingNet
 
