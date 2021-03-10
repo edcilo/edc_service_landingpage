@@ -5,6 +5,7 @@ services:
         container_name: landing_django
         build: .
         volumes:
+            - ./:/code/
             - ./docker/landing/static:/code/static
         env_file:
             - .env
