@@ -25,9 +25,10 @@ def index(request):
 @cache_page(CACHE_TTL, key_prefix="landing_view")
 @api_view(['GET'])
 def published_schema(request):
+    domain = request.META['HTTP_HOST']
     try:
         lang = request.GET['lang'] if 'lang' in request.GET else None
-        schema = Landing.objects.filter(published=True).get()
+        schema = Landing.objects.filter(published=True, domain__contains=domain).first()
 
         if lang is not None and lang not in schema.schema:
             raise Http404

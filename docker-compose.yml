@@ -1,24 +1,23 @@
 version: "3.8"
 
 services:
-    landing_django:
-        container_name: landing_django
+    edc_landing_django:
+        container_name: edc_landing_django
         build: .
         volumes:
+            - ./:/code/
             - ./docker/landing/static:/code/static
         env_file:
             - .env
 
-    landing_nginx:
-        container_name: landing_nginx
+    edc_landing_nginx:
+        container_name: edc_landing_nginx
         image: nginx:alpine
         volumes:
             - ./docker/nginx/sites:/etc/nginx/conf.d
             - ./docker/landing/static:/code/static
-        ports:
-            - ${APP_PORT:-80}:80
         depends_on:
-            - landing_django
+            - edc_landing_django
         environment:
             - VIRTUAL_HOST=${SERVICE_LANDING_DNS}
             - LETSENCRYPT_HOST=${SERVICE_LANDING_DNS}

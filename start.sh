@@ -12,6 +12,7 @@ echo "update pip and install dependencies"
 pip install -r requirements.txt
 
 echo "execute migrations"
+python manage.py makemigrations
 python manage.py migrate
 
 echo "collect static files"

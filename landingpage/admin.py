@@ -8,7 +8,7 @@ from .models import Landing, Contact
 
 # Register your models here.
 class LandingAdmin(admin.ModelAdmin):
-    list_display = ('name', 'published', 'last_modified', 'created')
+    list_display = ('name', 'domain', 'published', 'last_modified', 'created')
     search_fields = ['name']
     formfield_overrides = {
         models.JSONField: {'widget': JSONEditorWidget},
