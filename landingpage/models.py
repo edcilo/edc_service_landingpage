@@ -15,6 +15,7 @@ def schema_default():
 
 class Landing(models.Model):
     name = models.CharField("Schema's name", max_length=100, unique=True)
+    domain = models.CharField(max_length=100, default='127.0.0.1;localhost')
     schema = models.JSONField(default=schema_default, help_text="JSON schema")
     published = models.BooleanField(default=False, help_text="Use this schema?")
     created = models.DateTimeField(auto_now_add=True)
@@ -25,10 +26,11 @@ class Landing(models.Model):
 
     def save(self, *args, **kwargs):
         cache.delete_pattern("*landing_view*")
+        print(Landing.objects.filter(published=True, domain__contains=self.domain).exclude(id=self.id).count())
 
         if self.published is True:
-            Landing.objects.filter(published=True).exclude(id=self.id).update(published=False)
-        elif Landing.objects.filter(published=True).exclude(id=self.id).count() == 0:
+            Landing.objects.filter(published=True, domain=self.domain).exclude(id=self.id).update(published=False)
+        elif Landing.objects.filter(published=True, domain=self.domain).exclude(id=self.id).count() == 0:
             self.published = True
 
         super().save(*args, **kwargs)
