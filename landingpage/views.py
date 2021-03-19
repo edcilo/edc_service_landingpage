@@ -27,7 +27,7 @@ def index(request):
 @api_view(['GET'])
 def published_schema(request):
     try:
-        origin = request.headers['X-edc-Origin']
+        origin = request.headers['x-edc-origin']
     except KeyError:
         raise ParseError
 
