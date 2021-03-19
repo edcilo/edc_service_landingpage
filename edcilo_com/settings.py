@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 
+from corsheaders.defaults import default_headers
 from pathlib import Path
 from .environ import env
 
@@ -141,6 +142,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://github.com/adamchainz/django-cors-headers
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'x-edc-origin',
+]
 
 # restringir por dominio
 """
