@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 from django.views.decorators.cache import cache_page
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import ValidationError, ParseError
 
 from .models import Landing
 from .serializers import LandingSerializer, ContactSerializer
@@ -25,10 +26,14 @@ def index(request):
 @cache_page(CACHE_TTL, key_prefix="landing_view")
 @api_view(['GET'])
 def published_schema(request):
-    domain = request.META['HTTP_HOST']
+    try:
+        origin = request.headers['X-Origin']
+    except KeyError:
+        raise ParseError
+
     try:
         lang = request.GET['lang'] if 'lang' in request.GET else None
-        schema = Landing.objects.filter(published=True, domain__contains=domain).first()
+        schema = Landing.objects.filter(published=True, domain__contains=origin).first()
 
         if lang is not None and lang not in schema.schema:
             raise Http404

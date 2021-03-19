@@ -26,7 +26,6 @@ class Landing(models.Model):
 
     def save(self, *args, **kwargs):
         cache.delete_pattern("*landing_view*")
-        print(Landing.objects.filter(published=True, domain__contains=self.domain).exclude(id=self.id).count())
 
         if self.published is True:
             Landing.objects.filter(published=True, domain=self.domain).exclude(id=self.id).update(published=False)
