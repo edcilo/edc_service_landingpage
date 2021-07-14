@@ -14,6 +14,7 @@ def schema_default():
 
 
 class Landing(models.Model):
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField("Schema's name", max_length=100, unique=True)
     domain = models.CharField(max_length=100, default='127.0.0.1;localhost')
     schema = models.JSONField(default=schema_default, help_text="JSON schema")
@@ -45,6 +46,7 @@ class Landing(models.Model):
 
 
 class Contact(models.Model):
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255)
     message = models.TextField(max_length=2048)

@@ -37,7 +37,6 @@ HOME_REDIRECT_TO = env('APP_HOME_REDIRECT_TO')
 
 INSTALLED_APPS = [
     'landingpage.apps.LandingpageConfig',
-    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
